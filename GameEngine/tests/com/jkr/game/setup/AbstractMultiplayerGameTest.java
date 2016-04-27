@@ -13,7 +13,7 @@ public abstract class AbstractMultiplayerGameTest {
 		Comparable[] discriminators = getTestedInstance().getPlayerDiscriminators();
 		// iterate and compare n-th with others up to the end
 		IntStream.range(0, discriminators.length).forEach(i -> {
-			IntStream.range(i, discriminators.length).filter(j -> discriminators[i].compareTo(discriminators[j])==0).findAny().ifPresent(j -> Assert.fail("Duplicate discriminator: " + discriminators[j]));
+			IntStream.range(i+1, discriminators.length).filter(j -> discriminators[i].compareTo(discriminators[j])==0).findAny().ifPresent(j -> Assert.fail("Duplicate discriminator: " + discriminators[j]));
 		});
 	}
 	

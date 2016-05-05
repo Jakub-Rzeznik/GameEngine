@@ -26,7 +26,7 @@ public abstract class ConsolePlayer<S extends Comparable<S>> implements Player<S
 		ConsoleIO.printMessage("Player " + String.valueOf(getDiscriminator()) + ":" + msg);
 	}
 	
-	private static final class ConsoleResponse implements Response<String> {
+	static final class ConsoleResponse implements Response<String> {
 		private String cargo;
 		ConsoleResponse(String cargo) {
 			this.cargo = cargo;

@@ -1,28 +1,30 @@
 package com.jkr.game.presentation;
 
-public abstract class AbstractBoardConsoleRepresentation<S> implements ConsolePresentation<int[], S> {
+import com.jkr.game.area.Board;
+
+public abstract class AbstractBoardConsoleRepresentation<S> implements Presentation<int[], S> {
 
 	private final int width;
 	private final int height;
 	private final Dictionary<S> dictionary;
 	
-	protected AbstractBoardConsoleRepresentation(int width, int height, Dictionary<S> dict) {
-		this.width = width;
-		this.height = height;
+	protected AbstractBoardConsoleRepresentation(Board<?> board, Dictionary<S> dict) {
+		this.width = board.getWidth();
+		this.height = board.getHeight();
 		dictionary = dict;
-		if (width*height > dict.getMaxSize()) {
+		if (width*height > dictionary.getMaxSize()) {
 			throw new IllegalArgumentException("Maximum allowed number of fields is: " + dict.getMaxSize());
 		}
 	}
 
 	@Override
-	public void printToConsole() {
+	public void showToUser() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public int[] getForInput(S input) {
+	public int[] convertPresentationOrdinalToSpaceAreaOrdinal(S input) {
 		int ordinal = dictionary.toOrdinal(input);
 		int[] coordinates = new int[2];
 		coordinates[0] = assertHeight(ordinal/width);

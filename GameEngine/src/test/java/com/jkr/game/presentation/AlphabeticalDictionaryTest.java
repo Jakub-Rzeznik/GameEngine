@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.jkr.game.presentation.AlphabeticalDictionary;
+
 public class AlphabeticalDictionaryTest {
 	
 	private static final AlphabeticalDictionary dict = new AlphabeticalDictionary();

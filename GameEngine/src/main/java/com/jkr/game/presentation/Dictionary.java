@@ -13,10 +13,10 @@ public interface Dictionary<T> {
 	int toOrdinal(T type);
 	int getMaxSize();
 	
-	@SuppressWarnings("rawtypes")
-	public static Dictionary getDictionary(Class clazz) {
+	@SuppressWarnings("unchecked")
+	public static <S> Dictionary<S> getDictionary(Class<S> clazz) {
 		if (clazz == Character.class) {
-			return new AlphabeticalDictionary();
+			return ((Dictionary<S>)new AlphabeticalDictionary());
 		}
 		return null;
 	}

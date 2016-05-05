@@ -2,14 +2,12 @@ package com.jkr.game.execution;
 
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.niceMock;
 import static org.easymock.EasyMock.partialMockBuilder;
 import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.strictMock;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.easymock.EasyMock;
@@ -21,6 +19,7 @@ import com.jkr.game.interaction.Player;
 import com.jkr.game.interaction.Player.Response;
 import com.jkr.game.presentation.Presentation;
 
+@SuppressWarnings("all")
 public class TurnBasedBoardGameTest {
 
 	@Test(expected = GameExecutionException.class)

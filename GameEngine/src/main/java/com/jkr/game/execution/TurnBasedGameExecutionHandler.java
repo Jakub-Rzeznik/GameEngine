@@ -12,7 +12,7 @@ public class TurnBasedGameExecutionHandler<S extends Comparable<S>, T> implement
 	private final List<Player<S, T>> players = new LinkedList<>();
 
 	@SuppressWarnings("unchecked")
-	public TurnBasedGameExecutionHandler(TurnBasedGame<S, T> game) {
+	TurnBasedGameExecutionHandler(TurnBasedGame<S, T> game) {
 		this.game = game;
 		if (game instanceof MultiplayerGame) {
 			players.addAll(((MultiplayerGame<S, T>) game).getPlayers());

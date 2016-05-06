@@ -22,13 +22,6 @@ import com.jkr.game.presentation.Presentation;
 @SuppressWarnings("all")
 public class TurnBasedBoardGameTest {
 
-	@Test(expected = GameExecutionException.class)
-	public void testExceptionIfNoUsersSet() throws GameExecutionException {
-		TestBoard game = partialMockBuilder(TestBoard.class).withConstructor().createMock();
-		replay(game);
-		game.play();
-	}
-
 	@Test
 	public void testNextTurnWins() throws GameExecutionException {
 		createMocksForSuccessfullPuttingMarkAndAssertingVictory(true, false);
@@ -49,8 +42,8 @@ public class TurnBasedBoardGameTest {
 		int[] point = {0,0};
 		Player player = strictMock(Player.class);
 		Presentation presentation = strictMock(Presentation.class);
-		presentation.showToUser();
-		expectLastCall().anyTimes();
+		presentation.showAvailableMoves();
+		expectLastCall().once();
 		Board board = strictMock(Board.class);
 		Response response = strictMock(Response.class);
 		expect(response.getCargo()).andReturn("").anyTimes();
@@ -66,10 +59,12 @@ public class TurnBasedBoardGameTest {
 		board.putMark(point[0], point[1], Integer.valueOf(1));
 		expectLastCall().once();
 		expect(board.isWinConditionMet(point[0],  point[1])).andReturn(Boolean.TRUE).once();
+		presentation.showCurrentState();
+		expectLastCall().once();
 		replay(player, presentation, board, response);
-		TestBoard.board = board;
-		TestBoard.presentation = presentation;
-		TurnBasedBoardGame<Integer, Character> game = new TestBoard();
+		Board4Test.board = board;
+		Board4Test.presentation = presentation;
+		TurnBasedBoardGame<Integer, Character> game = Board4Test.getBoard4TesingTurnBasedBoardGame(board, presentation);
 		assertEquals(true, game.nextTurnForPlayer(player));
 	}
 	
@@ -77,8 +72,8 @@ public class TurnBasedBoardGameTest {
 		int[] point = {0,0};
 		Player player = strictMock(Player.class);
 		Presentation presentation = strictMock(Presentation.class);
-		presentation.showToUser();
-		expectLastCall().anyTimes();
+		presentation.showAvailableMoves();
+		expectLastCall().once();
 		Board board = strictMock(Board.class);
 		Response response = strictMock(Response.class);
 		expect(response.getCargo()).andReturn("").anyTimes();
@@ -91,94 +86,16 @@ public class TurnBasedBoardGameTest {
 		expect(board.isWinConditionMet(point[0],  point[1])).andReturn(expectedWin).once();
 		if (!expectedWin) {
 			expect(board.isFullyFilled()).andReturn(expectedFilled).once();
+			if (!expectedFilled) {
+				presentation.showCurrentState();
+				expectLastCall().once();
+			}
 		}
 		replay(player, presentation, board, response);
-		TestBoard.board = board;
-		TestBoard.presentation = presentation;
-		TurnBasedBoardGame<Integer, Character> game = new TestBoard();
+		Board4Test.board = board;
+		Board4Test.presentation = presentation;
+		TurnBasedBoardGame<Integer, Character> game = Board4Test.getBoard4TesingTurnBasedBoardGame(board, presentation);
 		assertEquals(expectedWin, game.nextTurnForPlayer(player));
-		
-	}
-
-	@Test
-	public void testWinInFirstRound() throws GameExecutionException {
-		Player player1 = strictMock(Player.class);
-		Player player2 = strictMock(Player.class);
-		List players = new ArrayList();
-		players.add(player1);
-		players.add(player2);
-		TestBoard game = partialMockBuilder(TestBoard.class).addMockedMethod("nextTurnForPlayer").withConstructor().createMock();
-		expect(game.nextTurnForPlayer(player1)).andReturn(Boolean.TRUE).once();
-		player1.showMessage(EasyMock.anyString());
-		expectLastCall().once();
-		replay(game, player1, player2);
-		game.setPlayers(players);
-		game.play();
-	}
-
-	@Test
-	public void testWinInSecondRound() throws GameExecutionException {
-		Player player1 = strictMock(Player.class);
-		Player player2 = strictMock(Player.class);
-		List players = new ArrayList();
-		players.add(player1);
-		players.add(player2);
-		TestBoard game = partialMockBuilder(TestBoard.class).addMockedMethod("nextTurnForPlayer").withConstructor().createMock();
-		expect(game.nextTurnForPlayer(player1)).andReturn(Boolean.FALSE).once();
-		expect(game.nextTurnForPlayer(player2)).andReturn(Boolean.TRUE).once();
-		player2.showMessage(EasyMock.anyString());
-		expectLastCall().once();
-		replay(game, player1, player2);
-		game.setPlayers(players);
-		game.play();
-	}
-
-	@Test
-	public void testWinInThirdRound() throws GameExecutionException {
-		Player player1 = strictMock(Player.class);
-		Player player2 = strictMock(Player.class);
-		List players = new ArrayList();
-		players.add(player1);
-		players.add(player2);
-		TestBoard game = partialMockBuilder(TestBoard.class).addMockedMethod("nextTurnForPlayer").withConstructor().createMock();
-		expect(game.nextTurnForPlayer(player1)).andReturn(Boolean.FALSE).once();
-		expect(game.nextTurnForPlayer(player2)).andReturn(Boolean.FALSE).once();
-		expect(game.nextTurnForPlayer(player1)).andReturn(Boolean.TRUE).once();
-		player1.showMessage(EasyMock.anyString());
-		expectLastCall().once();
-		replay(game, player1, player2);
-		game.setPlayers(players);
-		game.play();
-	}
-	
-	@Before
-	public void before() {
-		TestBoard.board = null;
-		TestBoard.presentation = null;
-	}
-	
-	
-	private static class TestBoard extends TurnBasedBoardGame<Integer, Character> {
-		
-		private static Board<Integer> board;
-		private static Presentation<int[], Character> presentation;
-		
-		TestBoard() {}
-
-		@Override
-		public Board<Integer> prepareCleanBoard() {
-			return board;
-		}
-
-		@Override
-		public Comparable<?>[] getPlayerDiscriminators() {
-			return null;
-		}
-
-		@Override
-		protected Presentation<int[], Character> getPresentation() {
-			return presentation;
-		}
 		
 	}
 

@@ -14,7 +14,7 @@ public abstract class TurnBasedBoardGame<M extends Comparable<M>,V> implements B
 	
 	@Override
 	public boolean nextTurnForPlayer(Player<M,V> player) throws GameExecutionException {
-		presentation.showToUser();
+		presentation.showAvailableMoves();
 		int[] coordinates = putMarkForPlayer(player);
 		if (board.isWinConditionMet(coordinates[0], coordinates[1])) {
 			return true;
@@ -22,6 +22,7 @@ public abstract class TurnBasedBoardGame<M extends Comparable<M>,V> implements B
 		if (board.isFullyFilled()) {
 			throw new GameExecutionException("Out of Moves");
 		}
+		presentation.showCurrentState();
 		return false;
 	}
 	

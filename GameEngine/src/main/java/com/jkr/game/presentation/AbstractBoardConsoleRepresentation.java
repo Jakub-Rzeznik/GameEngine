@@ -18,7 +18,13 @@ public abstract class AbstractBoardConsoleRepresentation<S> implements Presentat
 	}
 
 	@Override
-	public void showToUser() {
+	public void showCurrentState() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void showAvailableMoves() {
 		// TODO Auto-generated method stub
 		
 	}

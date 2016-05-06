@@ -6,7 +6,11 @@ public interface ExecutionHandler {
 	
 	public void play() throws GameExecutionException;
 	
-	public static ExecutionHandler getHandler(Game game) {
+	@SuppressWarnings("unchecked")
+	public static <S extends Comparable<S>, T>  ExecutionHandler getHandler(Game game) {
+		if (game instanceof TurnBasedGame) {
+			return new TurnBasedGameExecutionHandler<S, T>((TurnBasedGame<S, T>) game);
+		}
 		return null;
 	}
 

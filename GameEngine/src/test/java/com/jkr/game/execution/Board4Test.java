@@ -21,7 +21,7 @@ class Board4Test extends TurnBasedBoardGame<Integer, Character> implements Multi
 	}
 
 	@Override
-	public Comparable<?>[] getPlayerDiscriminators() {
+	public Integer[] getPlayerDiscriminators() {
 		throw new AssertionError("Should not be called.");
 	}
 

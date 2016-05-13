@@ -12,7 +12,7 @@ public interface ResponseParser<T> {
 		if (clazz == Character.class) {
 			return ((ResponseParser<S>)new CharacterParser());
 		}
-		throw new IllegalArgumentException();
+		throw new IllegalArgumentException("No ResponseParser support for class: " + clazz.getName());
 	}
 	
 	public static class CharacterParser implements ResponseParser<Character> {

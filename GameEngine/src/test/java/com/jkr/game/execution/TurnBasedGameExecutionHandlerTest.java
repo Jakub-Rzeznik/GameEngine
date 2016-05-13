@@ -13,6 +13,7 @@ import java.util.List;
 import org.easymock.EasyMock;
 import org.junit.Test;
 
+import com.jkr.game.Game;
 import com.jkr.game.interaction.Player;
 
 @SuppressWarnings("all")
@@ -24,6 +25,11 @@ public class TurnBasedGameExecutionHandlerTest {
 		expect(game.getPlayers()).andReturn(new ArrayList<>()).once();
 		replay(game);
 		new TurnBasedGameExecutionHandler<>(game).play();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testNotMultiplayerGameException() {
+		new TurnBasedGameExecutionHandler(strictMock(TurnBasedGame.class));
 	}
 
 	@Test

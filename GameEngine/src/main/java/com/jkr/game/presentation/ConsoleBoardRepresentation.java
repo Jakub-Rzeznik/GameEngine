@@ -2,10 +2,10 @@ package com.jkr.game.presentation;
 
 import com.jkr.game.area.Board;
 
-public class ConsoleBoardRepresentation<S> extends AbstractBoardPresentation<S>{
+public class ConsoleBoardRepresentation extends AbstractBoardPresentation<Character>{
 	
-	public ConsoleBoardRepresentation(Board<?> board, Dictionary<S> dict) {
-		super(board, dict);
+	public ConsoleBoardRepresentation(Board<?> board) {
+		super(board, Dictionary.getDictionary(Character.class));
 	}
 
 	@Override

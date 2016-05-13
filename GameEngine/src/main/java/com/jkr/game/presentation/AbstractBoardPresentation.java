@@ -19,11 +19,23 @@ public abstract class AbstractBoardPresentation<S> implements Presentation<int[]
 
 	@Override
 	public int[] convertPresentationOrdinalToSpaceAreaOrdinal(S input) {
-		int ordinal = dictionary.toOrdinal(input);
+		return spaceOrdinalToCoordinates(dictionary.toOrdinal(input));
+	}
+	
+	int[] spaceOrdinalToCoordinates(int ordinal) {
 		int[] coordinates = new int[2];
 		coordinates[0] = assertHeight(ordinal/width);
 		coordinates[1] = assertWidth(ordinal%width);
 		return coordinates;
+		
+	}
+	
+	int coordinatesToSpaceOrdinal(int x, int y) {
+		return x*width + y;
+	}
+	
+	S coordinatesToPresentationOrdinal(int x, int y) {
+		return dictionary.toType(coordinatesToSpaceOrdinal(x, y));
 	}
 	
 	private int assertHeight(int value) {

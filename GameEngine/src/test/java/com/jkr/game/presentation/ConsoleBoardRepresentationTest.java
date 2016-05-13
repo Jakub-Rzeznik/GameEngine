@@ -49,10 +49,10 @@ public class ConsoleBoardRepresentationTest {
 	
 
 	@SuppressWarnings("unchecked")
-	private static class TestRepresentation extends ConsoleBoardRepresentation<Character> {
+	private static class TestRepresentation extends ConsoleBoardRepresentation {
 
 		protected TestRepresentation(int width, int height) {
-			super(createBoardMock(width, height), Dictionary.getDictionary(Character.class));
+			super(createBoardMock(width, height));
 		}
 		
 		private static Board<Character> createBoardMock(int width, int height) {

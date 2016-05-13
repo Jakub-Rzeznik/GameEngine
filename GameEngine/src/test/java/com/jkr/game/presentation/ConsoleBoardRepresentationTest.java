@@ -8,7 +8,7 @@ import org.junit.Test;
 import com.jkr.game.area.Board;
 
 
-public class AbstractBoardConsoleRepresentationTest {
+public class ConsoleBoardRepresentationTest {
 
 	@Test
 	public void testGetForInput() {
@@ -49,7 +49,7 @@ public class AbstractBoardConsoleRepresentationTest {
 	
 
 	@SuppressWarnings("unchecked")
-	private static class TestRepresentation extends AbstractBoardConsoleRepresentation<Character> {
+	private static class TestRepresentation extends ConsoleBoardRepresentation<Character> {
 
 		protected TestRepresentation(int width, int height) {
 			super(createBoardMock(width, height), Dictionary.getDictionary(Character.class));

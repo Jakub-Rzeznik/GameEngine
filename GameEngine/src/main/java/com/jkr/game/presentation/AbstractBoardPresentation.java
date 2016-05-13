@@ -2,31 +2,19 @@ package com.jkr.game.presentation;
 
 import com.jkr.game.area.Board;
 
-public abstract class AbstractBoardConsoleRepresentation<S> implements Presentation<int[], S> {
+public abstract class AbstractBoardPresentation<S> implements Presentation<int[], S> {
 
 	private final int width;
 	private final int height;
 	private final Dictionary<S> dictionary;
-	
-	protected AbstractBoardConsoleRepresentation(Board<?> board, Dictionary<S> dict) {
+
+	AbstractBoardPresentation(Board<?> board, Dictionary<S> dict) {
 		this.width = board.getWidth();
 		this.height = board.getHeight();
 		dictionary = dict;
 		if (width*height > dictionary.getMaxSize()) {
 			throw new IllegalArgumentException("Maximum allowed number of fields is: " + dict.getMaxSize());
 		}
-	}
-
-	@Override
-	public void showCurrentState() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void showAvailableMoves() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -52,6 +40,5 @@ public abstract class AbstractBoardConsoleRepresentation<S> implements Presentat
 		}
 		return value;
 	}
-	
 
 }

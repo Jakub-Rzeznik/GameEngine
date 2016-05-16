@@ -26,7 +26,7 @@ class Board4Test extends TurnBasedBoardGame<Integer, Character> implements Multi
 	}
 
 	@Override
-	protected Presentation<int[], Character> getPresentation() {
+	protected Presentation<int[], Character> getPresentation(Board<Integer> board) {
 		return presentation;
 	}
 

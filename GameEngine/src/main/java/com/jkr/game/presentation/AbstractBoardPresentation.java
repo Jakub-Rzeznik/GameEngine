@@ -1,20 +1,24 @@
 package com.jkr.game.presentation;
 
+import java.lang.reflect.Array;
+
 import com.jkr.game.area.Board;
 
-public abstract class AbstractBoardPresentation<S> implements Presentation<int[], S> {
+public abstract class AbstractBoardPresentation<S, M extends Comparable<M>> implements Presentation<int[], S> {
 
 	private final int width;
 	private final int height;
 	private final Dictionary<S> dictionary;
+	private final Board<M> board;
 
-	AbstractBoardPresentation(Board<?> board, Dictionary<S> dict) {
+	AbstractBoardPresentation(Board<M> board, Dictionary<S> dict) {
 		this.width = board.getWidth();
 		this.height = board.getHeight();
 		dictionary = dict;
 		if (width*height > dictionary.getMaxSize()) {
 			throw new IllegalArgumentException("Maximum allowed number of fields is: " + dict.getMaxSize());
 		}
+		this.board = board;
 	}
 
 	@Override
@@ -27,7 +31,6 @@ public abstract class AbstractBoardPresentation<S> implements Presentation<int[]
 		coordinates[0] = assertHeight(ordinal/width);
 		coordinates[1] = assertWidth(ordinal%width);
 		return coordinates;
-		
 	}
 	
 	int coordinatesToSpaceOrdinal(int x, int y) {
@@ -52,5 +55,18 @@ public abstract class AbstractBoardPresentation<S> implements Presentation<int[]
 		}
 		return value;
 	}
+	
+	S[][] getBoardState(Class<S> clazz) {
+		M[][] mState = board.getBoardState();
+		S[][] sState = (S[][]) Array.newInstance(clazz, width, height);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				sState[i][j] = boardMark2PresentationSign(mState[i][j]);
+			}
+		}
+		return sState;
+	}
+	
+	abstract S boardMark2PresentationSign(M mark);
 
 }

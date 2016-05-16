@@ -13,4 +13,5 @@ public interface Board<S extends Comparable<S>> extends GameArea {
 	public boolean canPutMark(int i, int j);
 	public boolean isWinConditionMet(int i, int j);
 	public boolean isFullyFilled();
+	public S[][] getBoardState();
 }

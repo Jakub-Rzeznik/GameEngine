@@ -49,7 +49,7 @@ public class ConsoleBoardRepresentationTest {
 	
 
 	@SuppressWarnings("unchecked")
-	private static class TestRepresentation extends ConsoleBoardRepresentation {
+	private static class TestRepresentation extends ConsoleBoardRepresentation<Character> {
 
 		protected TestRepresentation(int width, int height) {
 			super(createBoardMock(width, height));

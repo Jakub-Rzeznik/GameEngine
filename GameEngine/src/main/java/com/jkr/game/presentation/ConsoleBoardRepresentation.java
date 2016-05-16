@@ -9,19 +9,21 @@ import com.jkr.game.area.Board;
 public class ConsoleBoardRepresentation<M extends Comparable<M>> extends AbstractBoardPresentation<Character, M>{
 	
 	public ConsoleBoardRepresentation(Board<M> board) {
-		super(board, Dictionary.getDictionary(Character.class));
+		super(board, Character.class);
 	}
 
 	@Override
 	public void showCurrentState() {
-		Stream.of(getBoardState(Character.class)).forEach(row -> {
+		Stream.of(getBoardState()).forEach(row -> {
 			System.out.println(Stream.of(row).map(c -> " " + c + " ").collect(Collectors.joining("|")));
 		});
 	}
 	
 	@Override
 	public void showAvailableMoves() {
-		// TODO Auto-generated method stub
+		Stream.of(getAvailableTiles()).forEach(row -> {
+			System.out.println(Stream.of(row).map(c -> " " + Optional.ofNullable(c).map(String::valueOf).orElse(" ") + " ").collect(Collectors.joining("|")));
+		});
 		
 	}
 

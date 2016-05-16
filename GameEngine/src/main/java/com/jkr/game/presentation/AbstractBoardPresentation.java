@@ -10,15 +10,17 @@ public abstract class AbstractBoardPresentation<S, M extends Comparable<M>> impl
 	private final int height;
 	private final Dictionary<S> dictionary;
 	private final Board<M> board;
+	private final Class<S> typeClass;
 
-	AbstractBoardPresentation(Board<M> board, Dictionary<S> dict) {
+	AbstractBoardPresentation(Board<M> board, Class<S> clazz) {
 		this.width = board.getWidth();
 		this.height = board.getHeight();
-		dictionary = dict;
+		dictionary = Dictionary.getDictionary(clazz);
 		if (width*height > dictionary.getMaxSize()) {
-			throw new IllegalArgumentException("Maximum allowed number of fields is: " + dict.getMaxSize());
+			throw new IllegalArgumentException("Maximum allowed number of fields is: " + dictionary.getMaxSize());
 		}
 		this.board = board;
+		this.typeClass = clazz;
 	}
 
 	@Override
@@ -56,9 +58,9 @@ public abstract class AbstractBoardPresentation<S, M extends Comparable<M>> impl
 		return value;
 	}
 	
-	S[][] getBoardState(Class<S> clazz) {
+	S[][] getBoardState() {
 		M[][] mState = board.getBoardState();
-		S[][] sState = (S[][]) Array.newInstance(clazz, width, height);
+		S[][] sState = (S[][]) Array.newInstance(typeClass, width, height);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				sState[i][j] = boardMark2PresentationSign(mState[i][j]);
@@ -68,5 +70,18 @@ public abstract class AbstractBoardPresentation<S, M extends Comparable<M>> impl
 	}
 	
 	abstract S boardMark2PresentationSign(M mark);
+	
+	S[][] getAvailableTiles() {
+		M[][] mState = board.getBoardState();
+		S[][] moves = (S[][]) Array.newInstance(typeClass, width, height);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				if (mState[i][j] == null) {
+					moves[i][j] = coordinatesToPresentationOrdinal(i, j);
+				}
+			}
+		}
+		return moves;
+	}
 
 }

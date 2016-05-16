@@ -8,9 +8,9 @@ import com.jkr.game.presentation.Presentation;
 public abstract class TurnBasedBoardGame<M extends Comparable<M>,V> implements BoardGame<M>, TurnBasedGame<M, V> {
 	
 	private final Board<M> board = prepareCleanBoard();
-	private final Presentation<int[], V> presentation = getPresentation();
+	private final Presentation<int[], V> presentation = getPresentation(board);
 	
-	protected abstract Presentation<int[], V> getPresentation();
+	protected abstract Presentation<int[], V> getPresentation(Board<M> board);
 	
 	@Override
 	public boolean nextTurnForPlayer(Player<M,V> player) throws GameExecutionException {
